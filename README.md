@@ -7,6 +7,9 @@ Directions app helps you to find the best way (in terms of fare and duration) to
 - Setup Google Cloud Project.
 - Generate API Key under Credentials section.
 
+## API Documentation (referred for this app development)
+- https://developers.google.com/maps/documentation/directions/get-directions#before-you-begin
+
 ## Setup Instructions
 
 - Navigate to Setup.
