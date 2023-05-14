@@ -1,7 +1,29 @@
+/*
+************************************************************************************
+Apex Class Name    : DirectionsService
+Created Date       : May 12, 2023
+@description       : This Service class has methods that provide interaction 
+                        between the UI and Google directions API.
+                     
+@author            : Vandana Kuncham 
+
+Modification Log:
+Ver   Date         Author                               Modification
+1.0   05-12-2023   Vandana Kuncham                      Initial Version
+*************************************************************************************
+*/
 public with sharing class DirectionsService {
 
     public static String vHash = 'VmFuZGFuYSBLdW5jaGFt';
-
+    /*
+    *****************************************************************************
+    @Method Name    : costPerMileData
+    @author         : Vandana Kuncham
+    @description    : method is used to fetch cost per mile data
+    @param          : none
+    @return         : Map of transit mode with its cost. 
+    ****************************************************************************
+    */
     private static Map<String, Decimal> costPerMileData {
         get{
             if (costPerMileData == null) {
@@ -15,6 +37,17 @@ public with sharing class DirectionsService {
         private set;
     }
 
+    /*
+    *******************************************************************
+    @Method Name    : googleAPIInfo
+    @author         : Vandana Kuncham
+    @description    : method is used to fetch details to make the  
+                        Google Directions API call
+    @param          : none
+    @return         : Custom Metadata Record
+    ******************************************************************
+    */
+    //Fetches cost per mile data
     private static GoogleAPIDetail__mdt googleAPIInfo {
         get{
             if (googleAPIInfo == null) {
@@ -25,6 +58,17 @@ public with sharing class DirectionsService {
         private set;
     }
 
+    /*
+    *********************************************************************************************************
+    @Method Name    : googleAPIInfo
+    @author         : Vandana Kuncham
+    @description    : method is used to calculate the cost for each possible route.
+    @param          : DirectionsModel.Routes - Possible routes between the origin and destination
+                      String - Transportation mode selected by the user.
+    @return         : ResponseModel records representing the 
+                      Fare/Cost details for possible routes returned by the API call
+    **********************************************************************************************************
+    */
     public static List<ResponseModel> calculateCost(List<DirectionsModel.Routes> possibleRoutes, String transportationMode) {
         List<ResponseModel> responseList = new List<ResponseModel>();
         Decimal transportationCost;
@@ -52,6 +96,20 @@ public with sharing class DirectionsService {
         return responseList;
     }
 
+    /*
+    ***************************************************************************************
+    @Method Name    : getRoutes
+    @author         : Vandana Kuncham
+    @description    : method is used to fetch possible route details 
+                        between the origin and the destination provided
+    @param          : String that represents the orgin address selected in the UI 
+                      String that represents the destination address selected in the UI
+                      String to represent the transportation mode selected in the UI
+    @return         : ResponseModel records representing the 
+                        Fare/Cost details for possible routes returned by the API call.
+    ****************************************************************************************
+    */
+
     public static List<ResponseModel> getRoutes(String origin, String destination, String transportationMode) {
         List<ResponseModel> responseModels =  new List<ResponseModel>();
         HttpRequest req = new HttpRequest();       
@@ -73,5 +131,4 @@ public with sharing class DirectionsService {
     public class DirectionsServiceException extends Exception {
 
     }
-
 }
