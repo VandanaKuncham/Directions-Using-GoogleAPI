@@ -1,0 +1,19 @@
+<template>
+    <div>
+      <lightning-input-address
+        address-label={addressLabel}
+        street-label="Street"
+        city-label="City"
+        country-label="Country"
+        province-label="State"
+        postal-code-label="PostalCode"
+        street={address.street}
+        city={address.city}
+        country={address.country}
+        province={address.province}
+        postal-code={address.postalCode}
+        onchange={handleAddressChange}
+        show-address-lookup
+      ></lightning-input-address>
+    </div>
+  </template>

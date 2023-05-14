@@ -1,0 +1,65 @@
+<template>
+    <lightning-card title="Get Transportation Cost">
+      <div class="slds-grid slds-grid_vertical slds-size_5-of-5">
+        <div
+            class="slds-col slds-grid slds-wrap slds-var-p-around_xx-small slds-size_5-of-5">
+            <h1 class="slds-wrap slds-var-p-around_xx-small">
+                Enter the origin and destination address and click on Get Directions to get details about your route.
+            </h1>
+            <c-address
+                class="slds-var-p-around_xx-small slds-size_1-of-2"
+                data-my-id="origin"
+                address-label="From Address"
+            ></c-address>
+            <c-address
+                class="slds-var-p-around_xx-small slds-size_1-of-2"
+                data-my-id="destination"
+                address-label="To Address"
+            ></c-address>
+        </div>
+        <div class="slds-col slds-var-p-around_xx-small slds-size_1-of-5">
+          <lightning-combobox 
+            name="mode"
+            label="Mode of Transport"
+            value={value}
+            placeholder="Select mode of Transport"
+            options={options}
+            onchange={handleChange}>
+        </lightning-combobox>
+        </div>
+        <div class="slds-col slds-var-p-around_xx-small">
+          <lightning-button
+            class="slds-var-p-around_xx-small slds-align_absolute-center"
+            label="Get Directions"
+            onclick={getTravelCost}
+        ></lightning-button>
+        </div>
+        <div class="slds-col slds-var-p-around_medium slds-size_5-of-5">
+          <template if:true={showSpinner}>
+            <lightning-spinner
+              alternative-text="Fetching possible routes to calculate travel cost."
+              title="Travel Options loading"
+            ></lightning-spinner>
+          </template>
+          <template if:true={travelOptions}>
+            <template for:each={travelOptions} for:item="eachOption">
+              <div
+                class="slds-card_boundary slds-grid slds-grid_vertical slds-var-m-bottom_small slds-var-p-around_small"
+                key={eachOption.id}
+              >
+                <div class="slds-var-p-around_xxx-small slds-text-align_left">
+                  Trip Distance: {eachOption.distance}
+                </div>
+                <div class="slds-var-p-around_xxx-small slds-text-align_left">
+                  Trip Duration: {eachOption.duration}
+                </div>
+                <div class="slds-var-p-around_xxx-small slds-text-align_left">
+                  Total Fare: {eachOption.transportationCost}
+                </div>
+              </div>
+            </template>
+          </template>
+        </div>
+      </div>
+    </lightning-card>
+  </template>
